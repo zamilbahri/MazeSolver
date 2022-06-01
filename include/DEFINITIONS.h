@@ -8,7 +8,7 @@
 
 /* Smaller mazes will be enlarged to MIN_WINDOW_SIZE. */
 /* Larger mazes will be actual size */
-#define MIN_WINDOW_SIZE 600
+#define MIN_WINDOW_SIZE 800
 
 /* Mazes larger than this will not be displayed */
 #define MAX_WIDTH 1002

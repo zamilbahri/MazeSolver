@@ -165,6 +165,8 @@ void Setup::DisplayImage() {
 	else {
 		SDL_SetWindowSize(window, width, width);
 	}
+
+	SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	
 	//SDL_Window* window = SDL_CreateWindow("maze", 200, 200, 200, 200, SDL_WINDOW_SHOWN);
 
