@@ -1,6 +1,6 @@
 # MazeSolver
 
-**AUTHORS: Zamil Bahri and Jacob Steckler**
+**AUTHORS: Zamil Bahri**
 
 <h2>About</h2>
 
@@ -58,12 +58,4 @@ DEFINITIONS.h, the program will display (and animate) the solution to the maze.
 
 Once the animation is completed, press enter, and enter again to terminate the program. Hopefully, the program
 ends with exit code 0.
-
-<h2>Bugs</h2>
-
-- Take a look at the top of main.cpp file for the TODO list for an overview.
-- Moving the console window on top of the maze window messes up the graphics. It is recommended you restart the program and move the console wndow to the right before the graphics window pops up.
-- Mazes larger than the height of your monitor screen will not be displayed by default. If you wish to have them diplayed, change the "MAX_WIDTH" constant's value in the "DEFINITIONS.h" file to a suitable value.
-- A* doesn't necessarily find the shortest path. Using a custom comparator for priority_queue to compare G_cost is less effective than the default comparator. Possible reason for less effectiveness could be that the heuristic function is off. The manhattan distance is not a good approximation, since the actual distance in the maze can be a long and convoluted path.
-- Need more comments, although most functions without comments are self-explanatory.
 
