@@ -1,7 +1,6 @@
 #ignore non-useful VS-generated files
 *.ipch
 .vs/
-*.sln
 *.vcxproj
 *.filters
 *.user
