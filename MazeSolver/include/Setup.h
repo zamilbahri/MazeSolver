@@ -46,7 +46,7 @@ public:
 	Setup();
 	~Setup();
 	
-	void InputFileName();
+	bool InputFileName();
 	bool ImportImage();
 	bool CreateMaze();
 	bool InputMethods();

@@ -1,11 +1,12 @@
 #include "../include/Setup.h"
+#include <fstream>
 
 Setup::Setup() : methods{ false } {
 	width = 0;
 	mz = nullptr;
 	s = nullptr;
 	im = nullptr;
-	filePath = "mazes/";
+	filePath = "MazeSolver/mazes/";
 	return;
 }
 
@@ -14,37 +15,45 @@ Setup::~Setup() {
 }
 
 // Displays a list of maze/file names
-static void DisplayMazeOptions() {
-	cout << "- tiny - 10x10. Used for testing." << endl;
-	cout << "- normal - 41x41. Used for testing." << endl;
-	cout << "- braid63 - 63x63. Used for testing." << endl;
-	cout << "- combo400 - 401x401. Multiple solutions, no dead ends." << endl;
-	cout << "- braid600 - 601x601. Multiple solutions." << endl;
-	cout << "- perfect600 - 601x601. Unique solution." << endl;
-	cout << "- braid800 - 801x801. Multiple solutions" << endl;
-	cout << "- perfect800 - 801x801. Unique solution." << endl;
-	cout << "- braid1k - 1001x1001. Multiple solutions." << endl;
-	cout << "- perfect1k - 1001x1001. Unique solution." << endl;
-	cout << "- perfect2k - 2001x2001. Unique solution." << endl;
-	cout << "- perfect4k - 4001x4001. Unique solution." << endl;
-	cout << "- perfect6k - 6001x6001. Unique solution." << endl;
-	cout << "- combo6k - Multiple solutions, no dead ends." << endl;
+static void _DisplayMazeOptions() {
+	cout << "tiny       - 10x10. Used for testing." << endl;
+	cout << "normal     - 41x41. Used for testing." << endl;
+	cout << "braid63    - 63x63. Used for testing." << endl;
+	cout << "combo400   - 401x401. Multiple solutions, no dead ends." << endl;
+	cout << "braid600   - 601x601. Multiple solutions." << endl;
+	cout << "perfect600 - 601x601. Unique solution." << endl;
+	cout << "braid800   - 801x801. Multiple solutions" << endl;
+	cout << "perfect800 - 801x801. Unique solution." << endl;
+	cout << "braid1k    - 1001x1001. Multiple solutions." << endl;
+	cout << "perfect1k  - 1001x1001. Unique solution." << endl;
+	cout << "perfect2k  - 2001x2001. Unique solution." << endl;
+	cout << "perfect4k  - 4001x4001. Unique solution." << endl;
+	cout << "perfect6k  - 6001x6001. Unique solution." << endl;
+	cout << "combo6k    - Multiple solutions, no dead ends." << endl;
 	//cout << "!!!perfect10k!!! - 10001x10001. Used to download more RAM. /s" << endl;
 }
 
 
-void Setup::InputFileName() {
+bool Setup::InputFileName() {
 	cout << "Choose a maze from the following options:" << endl;
-	DisplayMazeOptions();
+	_DisplayMazeOptions();
 	cout << endl;
 	cout << "Enter the name of the maze:\n>>>";
 	string fileName;
 	getline(cin, fileName);
 	filePath += fileName + ".bmp";
-	cout << "filePath = " << filePath << endl;
-	cout << endl;
 
-	return;
+	if (FILE* file = fopen(filePath.c_str(), "r")) {
+		fclose(file);
+		cout << "File exists." << endl;
+		cout << "filePath = " << filePath << endl;
+		cout << endl;
+		return true;
+	}
+
+	cout << "File does not exist." << endl;
+	cout << "filePath = " << filePath << endl;
+	return true;
 }
 
 bool Setup::InputMethods() {
@@ -104,7 +113,7 @@ static Uint32 getpixel(SDL_Surface *surface, int x, int y)
 	default:
 		return 0; /* shouldn't happen, but avoids warnings */
 
-	} // switch
+	}
 }
 
 
