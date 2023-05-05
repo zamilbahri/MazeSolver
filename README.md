@@ -8,12 +8,11 @@ The mazes were generated in a program called [Daedalus (version 3.3)](http://www
 
 <h2> How to Link SDL2 and compile in Visual Studio </h2>
 
-0) Download SDL2 using the above link. Save it a directory where you can find it easily (for exampple, C:\\Libraries).
 1) Go to the Project Properties in Visual Studio.
 2) Go to VC++ Directories -> Include Directories, and click Edit.
-4) Navigate to where you downloaded SDL2, copy the path of the "include" folder, and add it to Include Directories, then click OK.
+4) Copy the path of the "include" folder in SDL2-2.0.20, and add it to Include Directories, then click OK.
 4) Go to VC++ Directories -> Library Directories, and click Edit.
-5) Navigate to where you downloaded SDL2, copy the path of the "lib/x64" folder, and add it to Library Directories, then click OK.
+5) Copy the path of the "lib/x64" folder in SDL2-2.0.20, and add it to Library Directories, then click OK.
 6) Go to Linker -> Input -> Additional Dependencies, and click Edit
 7) Type "SDL2.lib; SDl2main.lib" in the available box, then click OK.
 8) Go to Linker -> System -> SubSystem, and in the dropdown menu, click "/SUBSYSTEM: CONSOLE".
@@ -56,6 +55,5 @@ sample inputs:
 Once you have chosen your method(s), the program will begin the pathfinding. Depending on your preferences set in
 DEFINITIONS.h, the program will display (and animate) the solution to the maze.
 
-Once the animation is completed, press enter, and enter again to terminate the program. Hopefully, the program
-ends with exit code 0.
+Once the animation is completed, go back to the terminal window, press enter, and enter again to terminate the program.
 
