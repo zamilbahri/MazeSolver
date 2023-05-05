@@ -12,7 +12,7 @@
 #define SETUP_H_
 
 #include "Solver.h"
-#include <SDL.h>
+#include "SDL.h"
 #include <ctime>
 #include <string>
 
@@ -46,6 +46,7 @@ public:
 	Setup();
 	~Setup();
 	
+	void DisplayMazeOptions();
 	bool InputFileName();
 	bool ImportImage();
 	bool CreateMaze();

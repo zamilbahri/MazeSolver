@@ -1,12 +1,14 @@
 #include "../include/Setup.h"
 #include <fstream>
+#include <cstdlib>
+#include <stdint.h>
 
 Setup::Setup() : methods{ false } {
 	width = 0;
 	mz = nullptr;
 	s = nullptr;
 	im = nullptr;
-	filePath = "MazeSolver/mazes/";
+	filePath = "mazes/";
 	return;
 }
 
@@ -15,54 +17,54 @@ Setup::~Setup() {
 }
 
 // Displays a list of maze/file names
-static void _DisplayMazeOptions() {
-	cout << "tiny       - 10x10. Used for testing." << endl;
-	cout << "normal     - 41x41. Used for testing." << endl;
-	cout << "braid63    - 63x63. Used for testing." << endl;
-	cout << "combo400   - 401x401. Multiple solutions, no dead ends." << endl;
-	cout << "braid600   - 601x601. Multiple solutions." << endl;
-	cout << "perfect600 - 601x601. Unique solution." << endl;
-	cout << "braid800   - 801x801. Multiple solutions" << endl;
-	cout << "perfect800 - 801x801. Unique solution." << endl;
-	cout << "braid1k    - 1001x1001. Multiple solutions." << endl;
-	cout << "perfect1k  - 1001x1001. Unique solution." << endl;
-	cout << "perfect2k  - 2001x2001. Unique solution." << endl;
-	cout << "perfect4k  - 4001x4001. Unique solution." << endl;
-	cout << "perfect6k  - 6001x6001. Unique solution." << endl;
-	cout << "combo6k    - Multiple solutions, no dead ends." << endl;
-	//cout << "!!!perfect10k!!! - 10001x10001. Used to download more RAM. /s" << endl;
+void Setup::DisplayMazeOptions() {
+	std::cout << "Choose a maze from the following options:" << endl;
+
+	std::cout << "tiny       - 10x10. Used for testing." << endl;
+	std::cout << "normal     - 41x41. Used for testing." << endl;
+	std::cout << "braid63    - 63x63. Used for testing." << endl;
+	std::cout << "combo400   - 401x401. Multiple solutions, no dead ends." << endl;
+	std::cout << "braid600   - 601x601. Multiple solutions." << endl;
+	std::cout << "perfect600 - 601x601. Unique solution." << endl;
+	std::cout << "braid800   - 801x801. Multiple solutions" << endl;
+	std::cout << "perfect800 - 801x801. Unique solution." << endl;
+	std::cout << "braid1k    - 1001x1001. Multiple solutions." << endl;
+	std::cout << "perfect1k  - 1001x1001. Unique solution." << endl;
+	std::cout << "perfect2k  - 2001x2001. Unique solution." << endl;
+	std::cout << "perfect4k  - 4001x4001. Unique solution." << endl;
+	std::cout << "perfect6k  - 6001x6001. Unique solution." << endl;
+	std::cout << "combo6k    - Multiple solutions, no dead ends." << endl;
+
+	std::cout << endl;
 }
 
 
 bool Setup::InputFileName() {
-	cout << "Choose a maze from the following options:" << endl;
-	_DisplayMazeOptions();
-	cout << endl;
-	cout << "Enter the name of the maze:\n>>>";
+	std::cout << "Enter the name of the maze:\n>>>";
 	string fileName;
 	getline(cin, fileName);
 	filePath += fileName + ".bmp";
 
 	if (FILE* file = fopen(filePath.c_str(), "r")) {
 		fclose(file);
-		cout << "File exists." << endl;
-		cout << "filePath = " << filePath << endl;
-		cout << endl;
+		std::cout << "File exists." << endl;
+		std::cout << "filePath = " << filePath << endl;
+		std::cout << endl;
 		return true;
 	}
 
-	cout << "File does not exist." << endl;
-	cout << "filePath = " << filePath << endl;
+	std::cout << "File does not exist." << endl;
+	std::cout << "filePath = " << filePath << endl;
 	return true;
 }
 
 bool Setup::InputMethods() {
-	cout << "Which of the following method(s) would you like to\n";
-	cout << "solve the maze with?" << endl;
-	cout << "1) Breadth-First Search" << endl;
-	cout << "2) Depth-First Search" << endl;
-	cout << "3) A*" << endl;
-	cout << "Your input:\n>>>";
+	std::cout << "Which of the following method(s) would you like to\n";
+	std::cout << "solve the maze with?" << endl;
+	std::cout << "1) Breadth-First Search" << endl;
+	std::cout << "2) Depth-First Search" << endl;
+	std::cout << "3) A*" << endl;
+	std::cout << "Your input:\n>>>";
 
 	string choices;
 	getline(cin, choices);
@@ -76,7 +78,7 @@ bool Setup::InputMethods() {
 			methods[(m - 48) - 1] = true;
 		}
 		else {
-			cout << "Input not recognized. Please try again.\n" << endl;
+			std::cout << "Input not recognized. Please try again.\n" << endl;
 			return 0;
 		}
 	}
@@ -90,8 +92,7 @@ bool Setup::InputMethods() {
 
 // Helper function for ImportImage(). Gets the pixel from
 // the (x, y) coordinates of the SDL_Surface
-static Uint32 getpixel(SDL_Surface *surface, int x, int y)
-{
+static Uint32 getpixel(SDL_Surface *surface, int x, int y) {
 	int bpp = surface->format->BytesPerPixel;
 	/* Here p is the address to the pixel we want to retrieve */
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
@@ -125,7 +126,7 @@ bool Setup::ImportImage() {
 	maze = SDL_LoadBMP(filePath.c_str());
 
 	if (maze == NULL) {
-		cout << "Could not import image." << endl;
+		std::cout << "Could not import image." << endl;
 		SDL_FreeSurface(maze);
 		return 0;
 	}
@@ -148,15 +149,15 @@ bool Setup::ImportImage() {
 			im[i] = p; // implicit conversion int -> bool
 		}
 	}
-	cout << "Dimensions = " << maze->w << " x " << maze->h << endl;
+	std::cout << "Dimensions = " << maze->w << " x " << maze->h << endl;
 	width = maze->w;
 
 	SDL_UnlockSurface(maze);
 
 	clock_t end = clock();
 	double timeElapsed = (double)(end - begin) / CLOCKS_PER_SEC;
-	cout << "Time taken to read pixels = " << timeElapsed << " seconds." << endl;
-	cout << endl;
+	std::cout << "Time taken to read pixels = " << timeElapsed << " seconds." << endl;
+	std::cout << endl;
 
 	return 1;
 }
@@ -197,22 +198,22 @@ void Setup::DisplayImage() {
 // Sets up the nodes and the graph for the maze
 bool Setup::CreateMaze() {
 	if (width == 0) {
-		cout << "Data not properly scraped" << endl;
+		std::cout << "Data not properly scraped" << endl;
 		SDL_FreeSurface(maze);
 		return 0;
 	}
 
-	cout << "Creating Maze..." << endl;
+	std::cout << "Creating Maze..." << endl;
 
 	clock_t begin = clock();
 	mz = new Maze(im, width);
 	clock_t end = clock();
 	double timeElapsed = (double)(end - begin) / CLOCKS_PER_SEC;
 
-	cout << "Maze created." << endl;
-	cout << "Time taken to set up nodes = " << timeElapsed << " seconds." << endl;
-	cout << "Number of nodes = " << mz->numNodes << endl;
-	cout << endl;
+	std::cout << "Maze created." << endl;
+	std::cout << "Time taken to set up nodes = " << timeElapsed << " seconds." << endl;
+	std::cout << "Number of nodes = " << mz->numNodes << endl;
+	std::cout << endl;
 
 	if (width <= MAX_WIDTH && DISPLAY_EMPTY_MAZE) {
 		DisplayImage();
@@ -220,8 +221,8 @@ bool Setup::CreateMaze() {
 
 	system("pause");
 	system("cls");
-	cout << "filePath = " << filePath << endl;
-	cout << endl;
+	std::cout << "filePath = " << filePath << endl;
+	std::cout << endl;
 
 	return 1;
 }
@@ -259,30 +260,30 @@ void Setup::DisplayPath(list<Node*> path, int r, int g, int b) {
 
 void Setup::SolveMaze() {
 
-	cout << "filePath = " << filePath << endl;
-	cout << "Number of nodes = " << mz->numNodes << endl;
-	cout << endl;
+	std::cout << "filePath = " << filePath << endl;
+	std::cout << "Number of nodes = " << mz->numNodes << endl;
+	std::cout << endl;
 
 	for (int i = 0; i < 3; ++i) {
 		if (methods[i] == false) continue;
 
 		Solver *s = new Solver(mz->start, mz->end);
 
-		cout << "Starting the solve using ";
-		if (i == 0) cout << "Breadth First Search..." << endl;
-		if (i == 1) cout << "Depth First Search..." << endl;
-		if (i == 2) cout << "A*..." << endl;
+		std::cout << "Starting the solve using ";
+		if (i == 0) std::cout << "Breadth First Search..." << endl;
+		if (i == 1) std::cout << "Depth First Search..." << endl;
+		if (i == 2) std::cout << "A*..." << endl;
 
 		clock_t begin = clock();
 		s->StartSolve(i);
 		clock_t end = clock();
 		double timeElapsed = (double)(end - begin) / CLOCKS_PER_SEC;
 
-		cout << "Maze solved." << endl;
-		cout << "Time taken to solve = " << timeElapsed << " seconds" << endl;
-		cout << "Nodes explored = " << s->nodesExplored << endl;
-		cout << "Path length = " << s->pathLength << endl;
-		cout << endl;
+		std::cout << "Maze solved." << endl;
+		std::cout << "Time taken to solve = " << timeElapsed << " seconds" << endl;
+		std::cout << "Nodes explored = " << s->nodesExplored << endl;
+		std::cout << "Path length = " << s->pathLength << endl;
+		std::cout << endl;
 
 		// Adds current path to renderer
 		if (width < MAX_WIDTH && DISPLAY_SOLUTION) {
