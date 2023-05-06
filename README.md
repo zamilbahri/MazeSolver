@@ -6,6 +6,9 @@
 
 The mazes were generated in a program called [Daedalus (version 3.3)](http://www.astrolog.org/labyrnth/daedalus.htm). All mazes must be in .bmp format. They are stored in the "mazes" folder. The program assumes that a start exists at the top row of the maze and an exit exists in the bottom row of the maze. The program only works with pixel-based, black and white mazes. The walls are black and the paths are white. The image format should be bitmap (.bmp). The graphics in the program were rendered using the [SDL2](https://libsdl.org/release/SDL2-devel-2.0.22-VC.zip) library.
 
+![](examples/braid63.png)
+![](examples/braid1k.png)
+
 <h2> How to Link SDL2 and compile in Visual Studio </h2>
 
 1) Go to the Project Properties in Visual Studio.
